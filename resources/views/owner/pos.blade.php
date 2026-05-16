@@ -44,7 +44,7 @@
                 @foreach($products as $product)
                 <div x-show="matchesSearch('{{ strtolower($product->name) }}') && matchesCategory({{ $product->category_id ?? 'null' }})" 
                      class="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer overflow-hidden group flex flex-col h-full"
-                     @click="addToCart({{ $product->id }}, '{{ addslashes($product->name) }}', {{ $product->price }}, '{{ $product->image ? Storage::url($product->image) : '' }}')">
+                     @click="addToCart({{ $product->id }}, '{{ addslashes($product->name) }}', {{ $product->price }}, '{{ $product->image ? Storage::url($product->image) : '' }}', {{ $product->toppings ? json_encode($product->toppings) : '[]' }})">
                     
                     <div class="aspect-square bg-slate-50 relative overflow-hidden">
                         @if($product->image)
@@ -158,6 +158,11 @@
                         
                         <div class="flex-1 min-w-0">
                             <h4 class="font-bold text-slate-800 text-sm truncate" x-text="item.name"></h4>
+                            <template x-if="item.toppings && item.toppings.length > 0">
+                                <p class="text-[10px] text-slate-500 truncate mt-0.5">
+                                    + <span x-text="item.toppings.map(t => t.name).join(', ')"></span>
+                                </p>
+                            </template>
                             <p class="text-indigo-600 font-bold text-xs mt-0.5">Rp <span x-text="formatMoney(item.price)"></span></p>
                         </div>
 
@@ -216,6 +221,56 @@
                 <span x-text="isProcessing ? 'Memproses...' : 'Proses Pembayaran'"></span>
             </button>
         </div>
+        </div>
+    </div>
+
+    <!-- Topping Selection Modal -->
+    <div x-show="showToppingModal" class="fixed inset-0 z-[60] overflow-y-auto" style="display: none;">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
+            <div x-show="showToppingModal" x-transition.opacity class="fixed inset-0 transition-opacity bg-slate-900/50 backdrop-blur-sm" @click="showToppingModal = false"></div>
+
+            <div x-show="showToppingModal" x-transition class="relative inline-block w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-2xl border border-slate-200">
+                <div class="flex items-center justify-between mb-5 border-b border-slate-100 pb-4">
+                    <h3 class="text-lg font-bold text-slate-800">Pilih Topping Opsional</h3>
+                    <button @click="showToppingModal = false" class="text-slate-400 hover:text-slate-600 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+                </div>
+                
+                <div class="mb-4 bg-indigo-50/50 p-3 rounded-xl flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-lg bg-white shadow-sm overflow-hidden flex-shrink-0 flex items-center justify-center">
+                        <template x-if="selectedProductForTopping?.image">
+                            <img :src="selectedProductForTopping.image" class="w-full h-full object-cover">
+                        </template>
+                        <template x-if="!selectedProductForTopping?.image">
+                            <i data-lucide="coffee" class="w-6 h-6 text-slate-400"></i>
+                        </template>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm" x-text="selectedProductForTopping?.name"></h4>
+                        <p class="text-indigo-600 font-bold text-xs">Rp <span x-text="formatMoney(selectedProductForTopping?.price || 0)"></span></p>
+                    </div>
+                </div>
+
+                <div class="space-y-2 max-h-[40vh] overflow-y-auto hide-scrollbar">
+                    <template x-for="(topping, index) in availableToppings" :key="index">
+                        <label class="flex items-center justify-between p-3 border rounded-xl cursor-pointer transition-colors"
+                               :class="topping.selected ? 'border-indigo-500 bg-indigo-50/30' : 'border-slate-200 hover:bg-slate-50'">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" x-model="topping.selected" class="w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                <span class="font-semibold text-slate-700 text-sm" x-text="topping.name"></span>
+                            </div>
+                            <span class="text-sm font-bold text-indigo-600">+Rp <span x-text="formatMoney(topping.price)"></span></span>
+                        </label>
+                    </template>
+                </div>
+
+                <div class="mt-6 flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="button" @click="showToppingModal = false" class="px-5 py-2.5 text-sm font-semibold text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl transition-colors">Batal</button>
+                    <button type="button" @click="confirmToppingsAndAdd()" class="px-5 py-2.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-sm flex items-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-4 h-4"></i> Tambahkan
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -236,6 +291,10 @@
             amountPaid: 0,
             isProcessing: false,
             
+            showToppingModal: false,
+            selectedProductForTopping: null,
+            availableToppings: [],
+            
             formatMoney(amount) {
                 return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             },
@@ -254,19 +313,51 @@
                 return true; 
             },
             
-            addToCart(id, name, price, image) {
-                const existing = this.cart.find(item => item.id === id);
+            addToCart(id, name, price, image, toppings = []) {
+                if (toppings && toppings.length > 0) {
+                    this.selectedProductForTopping = { id, name, price, image };
+                    this.availableToppings = toppings.map(t => ({ ...t, selected: false }));
+                    this.showToppingModal = true;
+                    // Trigger lucide icon re-render for modal
+                    setTimeout(() => lucide.createIcons(), 50);
+                    return;
+                }
+                
+                this.processAddToCart({ id, name, price, image }, []);
+            },
+            
+            confirmToppingsAndAdd() {
+                const selectedToppings = this.availableToppings.filter(t => t.selected);
+                this.processAddToCart(this.selectedProductForTopping, selectedToppings);
+            },
+            
+            processAddToCart(product, selectedToppings) {
+                const sortedToppings = [...selectedToppings].sort((a, b) => a.name.localeCompare(b.name));
+                const toppingsStr = JSON.stringify(sortedToppings);
+                
+                const toppingsPrice = sortedToppings.reduce((sum, t) => sum + Number(t.price), 0);
+                const unitPrice = Number(product.price) + toppingsPrice;
+
+                const existing = this.cart.find(item => 
+                    item.id === product.id && 
+                    JSON.stringify([...(item.toppings || [])].sort((a, b) => a.name.localeCompare(b.name))) === toppingsStr
+                );
+
                 if (existing) {
                     existing.quantity++;
                 } else {
                     this.cart.push({
-                        id: id,
-                        name: name,
-                        price: price,
-                        image: image,
-                        quantity: 1
+                        id: product.id,
+                        name: product.name,
+                        price: unitPrice,
+                        basePrice: product.price,
+                        image: product.image,
+                        quantity: 1,
+                        toppings: sortedToppings
                     });
                 }
+                
+                this.showToppingModal = false;
                 
                 if (this.cart.length === 1 && this.amountPaid === 0) {
                     this.amountPaid = this.grandTotal();

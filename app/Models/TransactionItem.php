@@ -4,7 +4,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionItem extends Model
 {
-    protected $fillable = ['transaction_id', 'product_id', 'product_name', 'price', 'quantity', 'subtotal'];
+    protected $fillable = ['transaction_id', 'product_id', 'product_name', 'price', 'quantity', 'subtotal', 'toppings'];
+
+    protected $casts = [
+        'toppings' => 'array'
+    ];
 
     public function transaction()
     {

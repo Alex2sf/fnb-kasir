@@ -4,7 +4,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['store_id', 'category_id', 'name', 'sku', 'price', 'stock', 'is_available', 'image'];
+    protected $fillable = ['store_id', 'category_id', 'name', 'sku', 'price', 'stock', 'is_available', 'image', 'toppings'];
+
+    protected $casts = [
+        'toppings' => 'array',
+        'is_available' => 'boolean'
+    ];
 
     public function store()
     {

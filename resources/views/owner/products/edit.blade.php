@@ -100,6 +100,48 @@
             </div>
         </div>
 
+            <!-- Toppings -->
+            <div x-data="{ toppings: {{ $product->toppings ? json_encode($product->toppings) : '[]' }} }" class="grid grid-cols-1 gap-6 pt-4">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Topping Opsional</h3>
+                        <button type="button" @click="toppings.push({name: '', price: ''})" class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Topping
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <template x-for="(topping, index) in toppings" :key="index">
+                        <div class="flex items-start sm:items-center flex-col sm:flex-row gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <div class="flex-1 w-full">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Topping</label>
+                                <input type="text" x-model="topping.name" :name="'toppings['+index+'][name]'" required class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm p-2.5 border" placeholder="Contoh: Ekstra Keju">
+                            </div>
+                            <div class="w-full sm:w-48">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Harga (Rp)</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-medium text-sm">Rp</span>
+                                    <input type="number" x-model="topping.price" :name="'toppings['+index+'][price]'" required min="0" class="w-full pl-9 pr-3 rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm p-2.5 border" placeholder="3000">
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-auto flex justify-end mt-4 sm:mt-5">
+                                <button type="button" @click="toppings.splice(index, 1)" class="p-2.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors border border-transparent hover:border-red-100" title="Hapus Topping">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <div x-show="toppings.length === 0" class="text-center py-6 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+                        <i data-lucide="layers" class="w-8 h-8 text-slate-300 mx-auto mb-2"></i>
+                        <p class="text-sm font-medium text-slate-500">Belum ada topping untuk menu ini.</p>
+                        <p class="text-xs text-slate-400 mt-1">Klik tombol 'Tambah Topping' di atas jika menu ini memiliki opsi tambahan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3">
             <a href="{{ route('owner.products.index') }}" class="px-5 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-200 rounded-xl transition-colors">Batal</a>
             <button type="submit" class="px-6 py-2.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm shadow-indigo-200 transition-colors flex items-center gap-2">

@@ -53,7 +53,12 @@
                     <span>{{ $item->product_name }}</span>
                     <span>Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
                 </div>
-                <div class="text-sm text-slate-500">
+                @if($item->toppings && is_array($item->toppings) && count($item->toppings) > 0)
+                <div class="text-[11px] font-bold text-slate-400 mt-0.5">
+                    + {{ implode(', ', array_column($item->toppings, 'name')) }}
+                </div>
+                @endif
+                <div class="text-sm text-slate-500 mt-0.5">
                     {{ $item->quantity }} x Rp {{ number_format($item->price, 0, ',', '.') }}
                 </div>
             </div>

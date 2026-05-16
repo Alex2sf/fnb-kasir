@@ -33,11 +33,15 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'sku' => 'nullable|string|max:100',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'toppings' => 'nullable|array',
+            'toppings.*.name' => 'required|string|max:100',
+            'toppings.*.price' => 'required|numeric|min:0'
         ]);
 
         $validated['store_id'] = $store->id;
         $validated['is_available'] = $request->has('is_available');
+        $validated['toppings'] = $request->toppings ? array_values($request->toppings) : null;
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('products', 'public');
@@ -65,10 +69,14 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'sku' => 'nullable|string|max:100',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'toppings' => 'nullable|array',
+            'toppings.*.name' => 'required|string|max:100',
+            'toppings.*.price' => 'required|numeric|min:0'
         ]);
 
         $validated['is_available'] = $request->has('is_available');
+        $validated['toppings'] = $request->toppings ? array_values($request->toppings) : null;
 
         if ($request->hasFile('image')) {
             if ($product->image) {

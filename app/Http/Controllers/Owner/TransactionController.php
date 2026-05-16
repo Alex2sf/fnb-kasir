@@ -99,6 +99,7 @@ class TransactionController extends Controller
                     'price' => $item['price'],
                     'quantity' => $item['quantity'],
                     'subtotal' => $item['price'] * $item['quantity'],
+                    'toppings' => isset($item['toppings']) && is_array($item['toppings']) ? array_values($item['toppings']) : null,
                 ]);
             }
 

@@ -63,6 +63,13 @@
         <tr>
             <td colspan="3">{{ $item->product_name }}</td>
         </tr>
+        @if($item->toppings && is_array($item->toppings) && count($item->toppings) > 0)
+        <tr>
+            <td colspan="3" style="font-size: 10px; padding-left: 5px; color: #555;">
+                + {{ implode(', ', array_column($item->toppings, 'name')) }}
+            </td>
+        </tr>
+        @endif
         <tr>
             <td width="30%">{{ $item->quantity }}x</td>
             <td width="30%">{{ number_format($item->price, 0, ',', '.') }}</td>
