@@ -81,10 +81,10 @@
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
             <div x-show="showModal" x-transition.opacity class="fixed inset-0 transition-opacity bg-slate-900/50 backdrop-blur-sm" @click="showModal = false"></div>
 
-            <div x-show="showModal" x-transition class="relative inline-block w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <div class="flex items-center justify-between mb-5">
+            <div x-show="showModal" x-transition class="relative inline-block w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-md border border-slate-200">
+                <div class="flex items-center justify-between mb-5 border-b border-slate-100 pb-4">
                     <h3 class="text-lg font-bold text-slate-800" x-text="editMode ? 'Edit Pengeluaran' : 'Catat Pengeluaran'"></h3>
-                    <button @click="showModal = false" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+                    <button @click="showModal = false" class="text-slate-400 hover:text-slate-600 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
 
                 <form :action="editMode ? '{{ url('owner/expenses') }}/' + expenseId : '{{ route('owner.expenses.store') }}'" method="POST">
@@ -93,31 +93,34 @@
                         <input type="hidden" name="_method" value="PUT">
                     </template>
                     
-                    <div class="space-y-4 text-left">
+                    <div class="space-y-5">
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Keterangan / Judul</label>
-                            <input type="text" name="title" x-model="title" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500" placeholder="Contoh: Beli Gas, Bayar Listrik">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Keterangan / Judul</label>
+                            <input type="text" name="title" x-model="title" required class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" placeholder="Contoh: Beli Gas, Bayar Listrik">
                         </div>
+                        
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nominal Pengeluaran</label>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Nominal Pengeluaran</label>
                             <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">Rp</span>
-                                <input type="number" name="amount" x-model="amount" required class="w-full pl-12 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500" placeholder="0">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-medium">Rp</span>
+                                <input type="number" name="amount" x-model="amount" required class="w-full pl-11 pr-4 py-2.5 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" placeholder="0">
                             </div>
                         </div>
+
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tanggal</label>
-                            <input type="date" name="date" x-model="date" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Tanggal</label>
+                            <input type="date" name="date" x-model="date" required class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
                         </div>
+
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Catatan Tambahan (Opsional)</label>
-                            <textarea name="notes" x-model="notes" rows="2" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500" placeholder="Detail tambahan jika diperlukan..."></textarea>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Catatan Tambahan (Opsional)</label>
+                            <textarea name="notes" x-model="notes" rows="3" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" placeholder="Detail tambahan jika diperlukan..."></textarea>
                         </div>
                     </div>
                     
-                    <div class="mt-6 flex justify-end gap-3">
-                        <button type="button" @click="showModal = false" class="px-4 py-2.5 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl">Batal</button>
-                        <button type="submit" class="px-4 py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl" x-text="editMode ? 'Simpan' : 'Catat'"></button>
+                    <div class="mt-8 flex justify-end gap-3 pt-4 border-t border-slate-100">
+                        <button type="button" @click="showModal = false" class="px-5 py-2.5 text-sm font-semibold text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 rounded-md transition-colors">Batal</button>
+                        <button type="submit" class="px-5 py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-md transition-colors shadow-sm" x-text="editMode ? 'Simpan Perubahan' : 'Catat Pengeluaran'"></button>
                     </div>
                 </form>
             </div>
