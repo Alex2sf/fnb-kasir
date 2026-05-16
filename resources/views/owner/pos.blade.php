@@ -221,9 +221,7 @@
                 <span x-text="isProcessing ? 'Memproses...' : 'Proses Pembayaran'"></span>
             </button>
         </div>
-        </div>
     </div>
-
     <!-- Topping Selection Modal -->
     <div x-show="showToppingModal" class="fixed inset-0 z-[60] overflow-y-auto" style="display: none;">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
