@@ -17,13 +17,13 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'number' => 'required|string|max:50',
+            'name' => 'required|string|max:50',
             'status' => 'required|in:available,occupied'
         ]);
 
         Table::create([
             'store_id' => auth()->user()->store->id,
-            'number' => $request->number,
+            'name' => $request->name,
             'status' => $request->status
         ]);
 
@@ -35,11 +35,11 @@ class TableController extends Controller
         if ($table->store_id !== auth()->user()->store->id) abort(403);
         
         $request->validate([
-            'number' => 'required|string|max:50',
+            'name' => 'required|string|max:50',
             'status' => 'required|in:available,occupied'
         ]);
 
-        $table->update($request->only('number', 'status'));
+        $table->update($request->only('name', 'status'));
         return back()->with('success', 'Data meja berhasil diperbarui.');
     }
 

@@ -51,7 +51,7 @@
         </tr>
         @if($transaction->table_id)
         <tr>
-            <td class="font-bold">Meja: {{ $transaction->table->number }}</td>
+            <td class="font-bold">Meja: {{ $transaction->table->name }}</td>
         </tr>
         @endif
     </table>

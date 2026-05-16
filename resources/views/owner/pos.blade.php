@@ -115,7 +115,7 @@
                 <select x-model="tableId" class="w-full bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all p-2.5 text-sm text-slate-700 font-medium cursor-pointer">
                     <option value="">Bawa Pulang</option>
                     @foreach($tables as $table)
-                        <option value="{{ $table->id }}">Meja {{ $table->number }}</option>
+                        <option value="{{ $table->id }}">Meja {{ $table->name }}</option>
                     @endforeach
                 </select>
 
