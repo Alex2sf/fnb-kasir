@@ -20,73 +20,71 @@
 
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Card 1 -->
+        <!-- Card 1: Omzet Hari Ini -->
         <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
             <div class="absolute -right-6 -top-6 bg-indigo-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
             <div class="flex justify-between items-start relative">
                 <div>
-                    <p class="text-sm font-medium text-slate-500">Total Penjualan</p>
-                    <h3 class="text-2xl font-bold text-slate-800 mt-1">Rp {{ number_format($totalOmzet, 0, ',', '.') }}</h3>
+                    <p class="text-sm font-medium text-slate-500">Omzet Hari Ini</p>
+                    <h3 class="text-2xl font-bold text-slate-800 mt-1">Rp {{ number_format($todayOmzet, 0, ',', '.') }}</h3>
                 </div>
                 <div class="p-2.5 bg-indigo-50 rounded-xl">
-                    <i data-lucide="banknote" class="w-6 h-6 text-indigo-600"></i>
+                    <i data-lucide="calendar" class="w-6 h-6 text-indigo-600"></i>
                 </div>
             </div>
             <div class="mt-4 flex items-center text-sm relative">
-                <span class="text-emerald-500 font-medium flex items-center"><i data-lucide="trending-up" class="w-4 h-4 mr-1"></i> +12.5%</span>
-                <span class="text-slate-400 ml-2">dari kemarin</span>
+                <span class="text-slate-400">Total penjualan hari ini</span>
             </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute -right-6 -top-6 bg-blue-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
-            <div class="flex justify-between items-start relative">
-                <div>
-                    <p class="text-sm font-medium text-slate-500">Total Transaksi</p>
-                    <h3 class="text-2xl font-bold text-slate-800 mt-1">{{ $totalTransactions }}</h3>
-                </div>
-                <div class="p-2.5 bg-blue-50 rounded-xl">
-                    <i data-lucide="receipt" class="w-6 h-6 text-blue-600"></i>
-                </div>
-            </div>
-            <div class="mt-4 flex items-center text-sm relative">
-                <span class="text-emerald-500 font-medium flex items-center"><i data-lucide="trending-up" class="w-4 h-4 mr-1"></i> +5.2%</span>
-                <span class="text-slate-400 ml-2">dari kemarin</span>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute -right-6 -top-6 bg-orange-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
-            <div class="flex justify-between items-start relative">
-                <div>
-                    <p class="text-sm font-medium text-slate-500">Total Produk</p>
-                    <h3 class="text-2xl font-bold text-slate-800 mt-1">{{ $totalProducts }}</h3>
-                </div>
-                <div class="p-2.5 bg-orange-50 rounded-xl">
-                    <i data-lucide="package" class="w-6 h-6 text-orange-600"></i>
-                </div>
-            </div>
-            <div class="mt-4 flex items-center text-sm relative">
-                <span class="text-slate-500 font-medium flex items-center">Aktif dijual</span>
-            </div>
-        </div>
-
-        <!-- Card 4 -->
+        <!-- Card 2: Laba Bersih -->
         <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
             <div class="absolute -right-6 -top-6 bg-emerald-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
             <div class="flex justify-between items-start relative">
                 <div>
-                    <p class="text-sm font-medium text-slate-500">Pelanggan Aktif</p>
-                    <h3 class="text-2xl font-bold text-slate-800 mt-1">0</h3>
+                    <p class="text-sm font-medium text-slate-500">Total Laba Bersih</p>
+                    <h3 class="text-2xl font-bold text-emerald-600 mt-1">Rp {{ number_format($netProfit, 0, ',', '.') }}</h3>
                 </div>
                 <div class="p-2.5 bg-emerald-50 rounded-xl">
-                    <i data-lucide="users" class="w-6 h-6 text-emerald-600"></i>
+                    <i data-lucide="trending-up" class="w-6 h-6 text-emerald-600"></i>
                 </div>
             </div>
-            <div class="mt-4 flex items-center text-sm relative">
-                <span class="text-slate-400">Total member</span>
+            <div class="mt-4 flex items-center text-sm relative text-slate-400">
+                <span>Setelah dikurangi pengeluaran</span>
+            </div>
+        </div>
+
+        <!-- Card 3: Total Omzet -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute -right-6 -top-6 bg-blue-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
+            <div class="flex justify-between items-start relative">
+                <div>
+                    <p class="text-sm font-medium text-slate-500">Total Omzet</p>
+                    <h3 class="text-2xl font-bold text-slate-800 mt-1">Rp {{ number_format($totalOmzet, 0, ',', '.') }}</h3>
+                </div>
+                <div class="p-2.5 bg-blue-50 rounded-xl">
+                    <i data-lucide="banknote" class="w-6 h-6 text-blue-600"></i>
+                </div>
+            </div>
+            <div class="mt-4 flex items-center text-sm relative text-slate-400">
+                <span>Total seluruh penjualan</span>
+            </div>
+        </div>
+
+        <!-- Card 4: Total Pengeluaran -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute -right-6 -top-6 bg-red-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
+            <div class="flex justify-between items-start relative">
+                <div>
+                    <p class="text-sm font-medium text-slate-500">Total Pengeluaran</p>
+                    <h3 class="text-2xl font-bold text-red-600 mt-1">Rp {{ number_format($totalExpenses, 0, ',', '.') }}</h3>
+                </div>
+                <div class="p-2.5 bg-red-50 rounded-xl">
+                    <i data-lucide="shopping-cart" class="w-6 h-6 text-red-600"></i>
+                </div>
+            </div>
+            <div class="mt-4 flex items-center text-sm relative text-slate-400">
+                <span>Biaya operasional toko</span>
             </div>
         </div>
     </div>

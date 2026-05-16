@@ -23,6 +23,12 @@ class DashboardController extends Controller
         $totalProducts = Product::where('store_id', $store->id)->count();
         $totalTransactions = Transaction::where('store_id', $store->id)->count();
         $totalOmzet = Transaction::where('store_id', $store->id)->sum('grand_total');
+        $totalExpenses = \App\Models\Expense::where('store_id', $store->id)->sum('amount');
+        $netProfit = $totalOmzet - $totalExpenses;
+        
+        // Stats Hari Ini
+        $todayOmzet = Transaction::where('store_id', $store->id)->whereDate('created_at', today())->sum('grand_total');
+        $todayExpenses = \App\Models\Expense::where('store_id', $store->id)->whereDate('date', today())->sum('amount');
         
         $recentTransactions = Transaction::where('store_id', $store->id)
             ->latest()
@@ -38,6 +44,17 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        return view('owner.dashboard', compact('store', 'totalProducts', 'totalTransactions', 'totalOmzet', 'recentTransactions', 'topProducts'));
+        return view('owner.dashboard', compact(
+            'store', 
+            'totalProducts', 
+            'totalTransactions', 
+            'totalOmzet', 
+            'totalExpenses', 
+            'netProfit', 
+            'todayOmzet', 
+            'todayExpenses', 
+            'recentTransactions', 
+            'topProducts'
+        ));
     }
 }

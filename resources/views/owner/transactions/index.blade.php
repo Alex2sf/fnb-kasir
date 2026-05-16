@@ -45,6 +45,11 @@
                             <td class="p-4">
                                 <p class="font-bold text-indigo-600">{{ $trx->receipt_number }}</p>
                                 <p class="text-xs text-slate-500 mt-0.5">{{ $trx->created_at->format('d M Y, H:i') }}</p>
+                                @if($trx->table)
+                                    <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-bold mt-1">
+                                        <i data-lucide="grid-2x2" class="w-2.5 h-2.5"></i> MEJA {{ $trx->table->name }}
+                                    </span>
+                                @endif
                             </td>
                             <td class="p-4">
                                 @if($trx->customer)
@@ -63,10 +68,16 @@
                                 </span>
                             </td>
                             <td class="p-4 text-right">
-                                <a href="{{ route('owner.transactions.show', $trx) }}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition-colors font-medium text-xs">
-                                    <i data-lucide="file-text" class="w-3 h-3"></i>
-                                    Detail
-                                </a>
+                                <div class="flex justify-end gap-2">
+                                    <a href="{{ route('owner.transactions.print', $trx) }}" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-indigo-600 rounded-lg transition-colors font-medium text-xs">
+                                        <i data-lucide="printer" class="w-3 h-3"></i>
+                                        Cetak
+                                    </a>
+                                    <a href="{{ route('owner.transactions.show', $trx) }}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg transition-colors font-medium text-xs">
+                                        <i data-lucide="file-text" class="w-3 h-3"></i>
+                                        Detail
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @empty
