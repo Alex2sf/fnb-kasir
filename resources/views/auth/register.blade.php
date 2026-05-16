@@ -70,8 +70,8 @@
             <!-- Mobile Logo -->
             <div class="lg:hidden text-center mb-4">
                 <div class="flex items-center justify-center gap-2 mb-2">
-                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white">
-                        <i data-lucide="coffee" class="w-6 h-6"></i>
+                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-2 shadow-sm">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <span class="text-2xl font-black text-slate-800 tracking-tight">WarungGalih<span class="font-light text-indigo-600">POS</span></span>
                 </div>
