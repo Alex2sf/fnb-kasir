@@ -160,14 +160,6 @@ class TransactionController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
-    public function show(Transaction $transaction)
-    {
-        if ($transaction->store_id !== auth()->user()->store->id) {
-            abort(403);
-        }
-        
-        return view('owner.transactions.show', compact('transaction'));
-    }
 
     public function print(Transaction $transaction)
     {
