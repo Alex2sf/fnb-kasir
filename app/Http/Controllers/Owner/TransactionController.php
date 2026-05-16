@@ -45,7 +45,7 @@ class TransactionController extends Controller
             foreach ($request->items as $item) {
                 $subtotal += ($item['price'] * $item['quantity']);
             }
-            $tax = round($subtotal * 0.11);
+            $tax = 0; // round($subtotal * 0.11); dinonaktifkan sementara
             $grandTotal = $subtotal + $tax;
             
             if ($request->amount_paid < $grandTotal && $request->payment_method === 'cash') {
@@ -92,5 +92,47 @@ class TransactionController extends Controller
             DB::rollBack();
             return response()->json(['success' => false, 'message' => 'Terjadi kesalahan sistem: ' . $e->getMessage()], 500);
         }
+    }
+
+    public function export()
+    {
+        $transactions = Transaction::where('store_id', auth()->user()->store->id)
+            ->with(['customer', 'user'])
+            ->latest()
+            ->get();
+
+        $filename = "Laporan_Transaksi_" . auth()->user()->store->name . "_" . date('Y-m-d_H-i') . ".csv";
+
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = ['No. Resi', 'Tanggal', 'Kasir', 'Pelanggan', 'Metode Pembayaran', 'Total Tagihan', 'Uang Diterima', 'Kembalian'];
+
+        $callback = function() use($transactions, $columns) {
+            $file = fopen('php://output', 'w');
+            fputs($file, "\xEF\xBB\xBF"); // UTF-8 BOM
+            fputcsv($file, $columns);
+
+            foreach ($transactions as $trx) {
+                fputcsv($file, [
+                    $trx->receipt_number,
+                    $trx->created_at->format('Y-m-d H:i:s'),
+                    $trx->user->name,
+                    $trx->customer ? $trx->customer->name : 'Umum',
+                    strtoupper($trx->payment_method),
+                    $trx->grand_total,
+                    $trx->paid_amount,
+                    $trx->change_amount
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

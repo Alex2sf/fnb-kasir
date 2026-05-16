@@ -140,6 +140,41 @@
             </div>
         </div>
     </div>
+
+    <!-- Secondary Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Top Selling Products -->
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-bold text-slate-800 text-lg">Menu Paling Laris</h3>
+                <i data-lucide="award" class="w-5 h-5 text-amber-500"></i>
+            </div>
+            
+            <div class="space-y-4">
+                @forelse($topProducts as $index => $item)
+                    <div class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors border border-slate-50">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full {{ $index === 0 ? 'bg-amber-100 text-amber-600' : ($index === 1 ? 'bg-slate-200 text-slate-600' : ($index === 2 ? 'bg-orange-100 text-orange-600' : 'bg-indigo-50 text-indigo-400')) }} flex items-center justify-center font-bold text-sm shadow-sm">
+                                {{ $index + 1 }}
+                            </div>
+                            <div>
+                                <p class="font-semibold text-slate-800 text-sm">{{ $item->product_name }}</p>
+                                <p class="text-xs text-slate-500">{{ $item->total_sold }} porsi terjual</p>
+                            </div>
+                        </div>
+                        <div class="text-indigo-600">
+                            <i data-lucide="trending-up" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center py-6 text-slate-400 text-sm flex flex-col items-center">
+                        <i data-lucide="package-open" class="w-8 h-8 mb-2 opacity-50"></i>
+                        Belum ada data penjualan
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 

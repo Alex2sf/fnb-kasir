@@ -9,8 +9,8 @@
             <i data-lucide="arrow-left" class="w-5 h-5"></i>
         </a>
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Tambah Produk Baru</h1>
-            <p class="text-slate-500 mt-1 text-sm">Isi detail lengkap produk menu Anda.</p>
+            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Tambah Menu Baru</h1>
+            <p class="text-slate-500 mt-1 text-sm">Masukkan detail menu makanan/minuman yang akan dijual.</p>
         </div>
     </div>
 
@@ -34,8 +34,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Produk <span class="text-red-500">*</span></label>
-                    <input type="text" name="name" value="{{ old('name') }}" required class="w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm p-2.5 border" placeholder="Contoh: Es Kopi Susu Aren">
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Menu <span class="text-red-500">*</span></label>
+                    <input type="text" name="name" value="{{ old('name') }}" required class="w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm p-2.5 border" placeholder="Contoh: Nasi Goreng Spesial">
+                    @error('name') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
@@ -66,7 +67,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Status Produk</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Status Menu</label>
                     <div class="mt-2">
                         <label class="flex items-center gap-3 cursor-pointer">
                             <input type="checkbox" name="is_available" value="1" {{ old('is_available', true) ? 'checked' : '' }} class="w-5 h-5 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer">

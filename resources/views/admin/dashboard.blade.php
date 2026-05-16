@@ -100,9 +100,9 @@
                             </td>
                             <td class="p-4 text-center">
                                 @if($store->user)
-                                <form action="{{ route('admin.users.toggle-status', $store->user) }}" method="POST">
+                                <form id="toggle-form-{{ $store->user->id }}" action="{{ route('admin.users.toggle-status', $store->user) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm {{ $store->user->is_active ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30' : 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30' }}" onclick="return confirm('Yakin ingin mengubah status akses login toko ini?')">
+                                    <button type="button" onclick="confirmToggle({{ $store->user->id }}, {{ $store->user->is_active ? 'true' : 'false' }}, '{{ addslashes($store->name) }}')" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm {{ $store->user->is_active ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30' : 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30' }}">
                                         @if($store->user->is_active)
                                             <i data-lucide="unlock" class="w-3.5 h-3.5 mr-1.5"></i> Aktif
                                         @else
@@ -126,3 +126,39 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function confirmToggle(userId, isActive, storeName) {
+        const title = isActive ? 'Suspend Toko Ini?' : 'Aktifkan Toko Ini?';
+        const text = isActive 
+            ? `Apakah Anda yakin ingin memblokir akses login untuk toko <b>${storeName}</b>?` 
+            : `Apakah Anda yakin ingin membuka kembali akses login untuk toko <b>${storeName}</b>?`;
+        const confirmButtonText = isActive ? 'Ya, Suspend!' : 'Ya, Aktifkan!';
+        const confirmButtonColor = isActive ? '#ef4444' : '#10b981';
+
+        Swal.fire({
+            title: title,
+            html: text,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: confirmButtonColor,
+            cancelButtonColor: '#475569',
+            confirmButtonText: confirmButtonText,
+            cancelButtonText: 'Batal',
+            background: '#1e293b',
+            color: '#f8fafc',
+            customClass: {
+                popup: 'rounded-2xl border border-slate-700',
+                title: 'text-lg font-bold',
+                confirmButton: 'rounded-xl',
+                cancelButton: 'rounded-xl'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('toggle-form-' + userId).submit();
+            }
+        });
+    }
+</script>
+@endpush

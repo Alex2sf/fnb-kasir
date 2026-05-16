@@ -9,8 +9,8 @@
             <i data-lucide="arrow-left" class="w-5 h-5"></i>
         </a>
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Edit Produk</h1>
-            <p class="text-slate-500 mt-1 text-sm">Perbarui informasi produk menu Anda.</p>
+            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Edit Menu</h1>
+            <p class="text-slate-500 mt-1 text-sm">Perbarui detail menu makanan/minuman ini.</p>
         </div>
     </div>
 
@@ -35,8 +35,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Produk <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Menu <span class="text-red-500">*</span></label>
                     <input type="text" name="name" value="{{ old('name', $product->name) }}" required class="w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm p-2.5 border">
+                    @error('name') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
@@ -67,7 +68,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Status Produk</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Status Menu</label>
                     <div class="mt-2">
                         <label class="flex items-center gap-3 cursor-pointer">
                             <input type="checkbox" name="is_available" value="1" {{ old('is_available', $product->is_available) ? 'checked' : '' }} class="w-5 h-5 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer">
@@ -80,7 +81,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Gambar Produk (Biarkan kosong jika tidak diubah)</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Gambar Menu (Biarkan kosong jika tidak diubah)</label>
                     <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 border-dashed rounded-xl hover:border-indigo-400 transition-colors bg-slate-50 relative group">
                         <div class="space-y-1 text-center">
                             <i data-lucide="image" class="mx-auto h-12 w-12 text-slate-300 group-hover:text-indigo-400 transition-colors"></i>

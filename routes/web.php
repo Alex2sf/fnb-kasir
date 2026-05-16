@@ -46,6 +46,7 @@ Route::middleware(['auth', 'role:owner'])->prefix('owner')->name('owner.')->grou
     Route::resource('customers', CustomerController::class)->except(['create', 'show', 'edit']);
     
     // Transactions
+    Route::get('/transactions/export', [TransactionController::class, 'export'])->name('transactions.export');
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');

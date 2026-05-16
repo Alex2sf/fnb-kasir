@@ -9,6 +9,12 @@
             <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Riwayat Transaksi</h1>
             <p class="text-slate-500 mt-1 text-sm">Semua riwayat transaksi penjualan yang berhasil.</p>
         </div>
+        <div class="flex items-center gap-2">
+            <a href="{{ route('owner.transactions.export') }}" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl font-medium transition-colors shadow-sm text-sm">
+                <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+                Export Excel (CSV)
+            </a>
+        </div>
     </div>
 
     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">

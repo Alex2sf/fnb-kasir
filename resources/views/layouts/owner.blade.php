@@ -48,11 +48,11 @@
                     Riwayat Transaksi
                 </a>
 
-                <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Manajemen</div>
+                <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Manajemen Menu</div>
                 
                 <a href="{{ route('owner.products.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.products.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
-                    <i data-lucide="package" class="w-5 h-5 {{ request()->routeIs('owner.products.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
-                    Produk
+                    <i data-lucide="coffee" class="w-5 h-5 {{ request()->routeIs('owner.products.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
+                    Daftar Menu
                 </a>
                 <a href="{{ route('owner.categories.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.categories.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="tags" class="w-5 h-5 {{ request()->routeIs('owner.categories.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>

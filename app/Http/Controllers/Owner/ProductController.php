@@ -45,7 +45,7 @@ class ProductController extends Controller
 
         Product::create($validated);
 
-        return redirect()->route('owner.products.index')->with('success', 'Produk berhasil ditambahkan!');
+        return redirect()->route('owner.products.index')->with('success', 'Menu berhasil ditambahkan!');
     }
 
     public function edit(Product $product)
@@ -65,7 +65,6 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'sku' => 'nullable|string|max:100',
-            'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|max:2048'
         ]);
 
@@ -80,7 +79,7 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('owner.products.index')->with('success', 'Produk berhasil diperbarui!');
+        return redirect()->route('owner.products.index')->with('success', 'Menu berhasil diperbarui!');
     }
 
     public function destroy(Product $product)
@@ -92,6 +91,6 @@ class ProductController extends Controller
         }
         
         $product->delete();
-        return redirect()->route('owner.products.index')->with('success', 'Produk berhasil dihapus!');
+        return redirect()->route('owner.products.index')->with('success', 'Menu berhasil dihapus!');
     }
 }

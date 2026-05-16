@@ -166,10 +166,12 @@
                     <span>Subtotal</span>
                     <span class="font-medium text-slate-700">Rp <span x-text="formatMoney(subtotal())"></span></span>
                 </div>
+                <!-- Pajak dinonaktifkan
                 <div class="flex justify-between text-slate-500">
                     <span>Pajak (11%)</span>
                     <span class="font-medium text-slate-700">Rp <span x-text="formatMoney(tax())"></span></span>
                 </div>
+                -->
                 <div class="flex justify-between items-center pt-3 border-t border-slate-100 border-dashed">
                     <span class="font-bold text-slate-800 text-base">Total Tagihan</span>
                     <span class="font-black text-indigo-600 text-2xl">Rp <span x-text="formatMoney(grandTotal())"></span></span>
@@ -282,7 +284,7 @@
             },
             
             tax() {
-                return Math.round(this.subtotal() * 0.11);
+                return 0; // Pajak dinonaktifkan sementara
             },
             
             grandTotal() {

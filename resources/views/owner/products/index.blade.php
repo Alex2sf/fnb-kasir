@@ -1,19 +1,20 @@
 @extends('layouts.owner')
 
 @section('title', 'Manajemen Produk')
+@section('title', 'Manajemen Menu')
 
 @section('content')
 <div class="space-y-6">
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Manajemen Produk</h1>
-            <p class="text-slate-500 mt-1 text-sm">Kelola semua daftar produk menu yang Anda jual.</p>
+            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Daftar Menu</h1>
+            <p class="text-slate-500 mt-1 text-sm">Kelola semua daftar menu makanan & minuman yang dijual.</p>
         </div>
         <div>
             <a href="{{ route('owner.products.create') }}" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl font-medium transition-colors shadow-sm shadow-indigo-200 text-sm">
                 <i data-lucide="plus" class="w-4 h-4"></i>
-                Tambah Produk
+                Tambah Menu
             </a>
         </div>
     </div>
@@ -41,7 +42,8 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-slate-50 border-b border-slate-100 text-xs uppercase tracking-wider text-slate-500">
-                        <th class="p-4 font-semibold">Produk</th>
+                        <th class="p-4 font-semibold text-slate-400">Gambar</th>
+                        <th class="p-4 font-semibold">Nama Menu</th>
                         <th class="p-4 font-semibold">Kategori</th>
                         <th class="p-4 font-semibold">Harga</th>
                         <th class="p-4 font-semibold">Status</th>
