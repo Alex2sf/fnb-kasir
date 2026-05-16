@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun - WarungGalih POS</title>
+    <link rel="icon" href="{{ asset('images/logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -24,8 +25,8 @@
         <div class="relative z-10 flex flex-col justify-between p-12 text-white w-full">
             <div>
                 <div class="flex items-center gap-3 mb-2">
-                    <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                        <i data-lucide="coffee" class="w-6 h-6"></i>
+                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-2 shadow-sm">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <span class="text-2xl font-black tracking-tight">WarungGalih<span class="font-light opacity-80">POS</span></span>
                 </div>
