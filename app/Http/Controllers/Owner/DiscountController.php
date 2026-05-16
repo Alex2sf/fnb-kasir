@@ -35,7 +35,7 @@ class DiscountController extends Controller
 
     public function update(Request $request, Discount $discount)
     {
-        if ($discount->store_id !== auth()->user()->store->id) abort(403);
+        if ($discount->store_id != auth()->user()->store->id) abort(403);
         
         $request->validate([
             'name' => 'required|string|max:100',
@@ -54,7 +54,7 @@ class DiscountController extends Controller
 
     public function destroy(Discount $discount)
     {
-        if ($discount->store_id !== auth()->user()->store->id) abort(403);
+        if ($discount->store_id != auth()->user()->store->id) abort(403);
         $discount->delete();
         return back()->with('success', 'Diskon berhasil dihapus.');
     }

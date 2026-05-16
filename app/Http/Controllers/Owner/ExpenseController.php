@@ -37,7 +37,7 @@ class ExpenseController extends Controller
 
     public function update(Request $request, Expense $expense)
     {
-        if ($expense->store_id !== auth()->user()->store->id) abort(403);
+        if ($expense->store_id != auth()->user()->store->id) abort(403);
         
         $request->validate([
             'title' => 'required|string|max:255',
