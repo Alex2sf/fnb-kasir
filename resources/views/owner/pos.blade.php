@@ -454,8 +454,27 @@
                     if (data.success) {
                         this.cart = [];
                         this.amountPaid = 0;
-                        if(data.print_url) window.open(data.print_url, '_blank');
-                        window.location.href = data.redirect;
+                        
+                        if(data.print_url) {
+                            Swal.fire({
+                                title: 'Transaksi Berhasil! 🎉',
+                                text: 'Apakah Anda ingin mencetak struk transaksi ini?',
+                                icon: 'success',
+                                showCancelButton: true,
+                                confirmButtonColor: '#4f46e5',
+                                cancelButtonColor: '#94a3b8',
+                                confirmButtonText: 'Ya, Cetak Struk',
+                                cancelButtonText: 'Tidak, Lewati',
+                                allowOutsideClick: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.open(data.print_url, '_blank');
+                                }
+                                window.location.href = data.redirect;
+                            });
+                        } else {
+                            window.location.href = data.redirect;
+                        }
                     } else {
                         alert(data.message || 'Gagal memproses transaksi.');
                         this.isProcessing = false;
