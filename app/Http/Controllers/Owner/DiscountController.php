@@ -56,6 +56,6 @@ class DiscountController extends Controller
     {
         if ($discount->store_id != auth()->user()->store->id) abort(403);
         $discount->delete();
-        return back()->with('success', 'Diskon berhasil dihapus.');
+        return redirect()->route('owner.discounts.index')->with('success', 'Diskon berhasil dihapus.');
     }
 }
