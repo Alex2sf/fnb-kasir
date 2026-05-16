@@ -1,0 +1,54 @@
+<?php
+
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Owner\DashboardController as OwnerDashboard;
+use App\Http\Controllers\Owner\PosController;
+use App\Http\Controllers\Owner\ProductController;
+use App\Http\Controllers\Owner\CategoryController;
+use App\Http\Controllers\Owner\CustomerController;
+use App\Http\Controllers\Owner\TransactionController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+// Central redirect after login
+Route::get('/dashboard', function () {
+    $role = auth()->user()->role->name;
+    if ($role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('owner.dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Admin Routes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+    Route::post('/users/{user}/toggle-status', [AdminDashboard::class, 'toggleStatus'])->name('users.toggle-status');
+});
+
+// Owner Routes
+Route::middleware(['auth', 'role:owner'])->prefix('owner')->name('owner.')->group(function () {
+    Route::get('/dashboard', [OwnerDashboard::class, 'index'])->name('dashboard');
+    Route::get('/pos', [PosController::class, 'index'])->name('pos');
+    
+    // Management
+    Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
+    Route::resource('products', ProductController::class);
+    Route::resource('customers', CustomerController::class)->except(['create', 'show', 'edit']);
+    
+    // Transactions
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
+    Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+});
+
+require __DIR__.'/auth.php';
