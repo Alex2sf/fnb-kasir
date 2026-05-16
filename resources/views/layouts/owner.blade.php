@@ -21,10 +21,9 @@
         
         <!-- Sidebar -->
         <aside class="flex-shrink-0 w-64 bg-white border-r border-slate-200 transition-all duration-300 z-30" :class="{'hidden md:flex flex-col': !sidebarOpen, 'flex flex-col absolute inset-y-0 left-0 shadow-2xl': sidebarOpen}">
-            <div class="h-16 flex items-center px-6 border-b border-slate-100">
+            <div class="h-16 flex items-center px-6 border-b border-slate-100 overflow-hidden">
                 <div class="flex items-center gap-2 text-indigo-600">
-                    <i data-lucide="coffee" class="w-6 h-6"></i>
-                    <span class="font-bold text-xl tracking-tight">WarungGalih<span class="font-light text-slate-800">POS</span></span>
+                    <span class="font-bold text-lg tracking-tight truncate">{{ auth()->user()->store->name ?? 'WarungGalih POS' }}</span>
                 </div>
                 <button @click="sidebarOpen = false" class="md:hidden ml-auto text-slate-400 hover:text-slate-600">
                     <i data-lucide="x" class="w-5 h-5"></i>
