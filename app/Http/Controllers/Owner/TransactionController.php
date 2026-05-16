@@ -33,6 +33,8 @@ class TransactionController extends Controller
             'items.*.quantity' => 'required|integer|min:1',
             'items.*.price' => 'required|numeric|min:0',
             'customer_id' => 'nullable|exists:customers,id',
+            'table_id' => 'nullable|exists:tables,id',
+            'discount_id' => 'nullable|exists:discounts,id',
             'payment_method' => 'required|string|in:cash,qris,transfer',
             'amount_paid' => 'required|numeric|min:0'
         ]);
@@ -45,8 +47,21 @@ class TransactionController extends Controller
             foreach ($request->items as $item) {
                 $subtotal += ($item['price'] * $item['quantity']);
             }
-            $tax = 0; // round($subtotal * 0.11); dinonaktifkan sementara
-            $grandTotal = $subtotal + $tax;
+
+            $discountAmount = 0;
+            if ($request->discount_id) {
+                $discount = \App\Models\Discount::find($request->discount_id);
+                if ($discount && $discount->store_id === $store->id) {
+                    if ($discount->type === 'percentage') {
+                        $discountAmount = $subtotal * ($discount->value / 100);
+                    } else {
+                        $discountAmount = $discount->value;
+                    }
+                }
+            }
+
+            $tax = 0; // round(($subtotal - $discountAmount) * 0.11);
+            $grandTotal = $subtotal - $discountAmount + $tax;
             
             if ($request->amount_paid < $grandTotal && $request->payment_method === 'cash') {
                 return response()->json(['success' => false, 'message' => 'Uang pembayaran kurang dari total tagihan.'], 400);
@@ -59,14 +74,21 @@ class TransactionController extends Controller
                 'store_id' => $store->id,
                 'user_id' => auth()->id(),
                 'customer_id' => $request->customer_id,
+                'table_id' => $request->table_id,
+                'discount_id' => $request->discount_id,
                 'receipt_number' => $receiptNumber,
                 'subtotal' => $subtotal,
+                'discount_amount' => $discountAmount,
                 'tax_amount' => $tax,
                 'grand_total' => $grandTotal,
                 'payment_method' => $request->payment_method,
                 'paid_amount' => $request->payment_method === 'cash' ? $request->amount_paid : $grandTotal,
                 'change_amount' => $changeAmount,
             ]);
+
+            if ($request->table_id) {
+                \App\Models\Table::where('id', $request->table_id)->update(['status' => 'occupied']);
+            }
 
             foreach ($request->items as $item) {
                 $product = Product::find($item['id']);
@@ -85,6 +107,7 @@ class TransactionController extends Controller
                 'success' => true, 
                 'message' => 'Transaksi berhasil!', 
                 'transaction_id' => $transaction->id,
+                'print_url' => route('owner.transactions.print', $transaction->id),
                 'redirect' => route('owner.pos')
             ]);
             
@@ -134,5 +157,23 @@ class TransactionController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    public function show(Transaction $transaction)
+    {
+        if ($transaction->store_id !== auth()->user()->store->id) {
+            abort(403);
+        }
+        
+        return view('owner.transactions.show', compact('transaction'));
+    }
+
+    public function print(Transaction $transaction)
+    {
+        if ($transaction->store_id !== auth()->user()->store->id) {
+            abort(403);
+        }
+        
+        return view('owner.transactions.print', compact('transaction'));
     }
 }

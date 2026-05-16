@@ -102,14 +102,30 @@
             </button>
         </div>
 
-        <!-- Customer Selection -->
-        <div class="p-3 border-b border-slate-100 flex-shrink-0 bg-slate-50/50">
+        <!-- Selection -->
+        <div class="p-3 border-b border-slate-100 flex-shrink-0 bg-slate-50/50 space-y-2">
             <select x-model="customerId" class="w-full bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all p-2.5 text-sm text-slate-700 font-medium cursor-pointer">
                 <option value="">Pelanggan Umum</option>
                 @foreach($customers as $customer)
                     <option value="{{ $customer->id }}">{{ $customer->name }} ({{ $customer->phone ?? '-' }})</option>
                 @endforeach
             </select>
+            
+            <div class="grid grid-cols-2 gap-2">
+                <select x-model="tableId" class="w-full bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all p-2.5 text-sm text-slate-700 font-medium cursor-pointer">
+                    <option value="">Bawa Pulang</option>
+                    @foreach($tables as $table)
+                        <option value="{{ $table->id }}">Meja {{ $table->number }}</option>
+                    @endforeach
+                </select>
+
+                <select x-model="discountId" class="w-full bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all p-2.5 text-sm text-slate-700 font-medium cursor-pointer">
+                    <option value="">Tanpa Diskon</option>
+                    @foreach($discounts as $discount)
+                        <option value="{{ $discount->id }}">{{ $discount->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
         <!-- Cart Items -->
@@ -166,6 +182,10 @@
                     <span>Subtotal</span>
                     <span class="font-medium text-slate-700">Rp <span x-text="formatMoney(subtotal())"></span></span>
                 </div>
+                <div x-show="discountAmount() > 0" class="flex justify-between text-emerald-500" style="display: none;">
+                    <span>Diskon</span>
+                    <span class="font-medium">-Rp <span x-text="formatMoney(discountAmount())"></span></span>
+                </div>
                 <!-- Pajak dinonaktifkan
                 <div class="flex justify-between text-slate-500">
                     <span>Pajak (11%)</span>
@@ -209,6 +229,9 @@
             showCartMobile: false,
             cart: [],
             customerId: '',
+            tableId: '',
+            discountId: '',
+            discountsList: @json($discounts),
             paymentMethod: 'cash',
             amountPaid: 0,
             isProcessing: false,
@@ -287,8 +310,21 @@
                 return 0; // Pajak dinonaktifkan sementara
             },
             
+            discountAmount() {
+                if (!this.discountId) return 0;
+                const discount = this.discountsList.find(d => d.id == this.discountId);
+                if (!discount) return 0;
+                
+                if (discount.type === 'percentage') {
+                    return this.subtotal() * (discount.value / 100);
+                } else {
+                    return discount.value;
+                }
+            },
+            
             grandTotal() {
-                return this.subtotal() + this.tax();
+                const total = this.subtotal() - this.discountAmount() + this.tax();
+                return total > 0 ? total : 0;
             },
 
             checkout() {
@@ -312,6 +348,8 @@
                     body: JSON.stringify({
                         items: this.cart,
                         customer_id: this.customerId || null,
+                        table_id: this.tableId || null,
+                        discount_id: this.discountId || null,
                         payment_method: this.paymentMethod,
                         amount_paid: this.paymentMethod === 'cash' ? this.amountPaid : gTotal
                     })
@@ -327,6 +365,7 @@
                     if (data.success) {
                         this.cart = [];
                         this.amountPaid = 0;
+                        if(data.print_url) window.open(data.print_url, '_blank');
                         window.location.href = data.redirect;
                     } else {
                         alert(data.message || 'Gagal memproses transaksi.');
