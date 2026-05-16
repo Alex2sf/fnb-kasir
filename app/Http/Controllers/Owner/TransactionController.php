@@ -85,7 +85,7 @@ class TransactionController extends Controller
                 'success' => true, 
                 'message' => 'Transaksi berhasil!', 
                 'transaction_id' => $transaction->id,
-                'redirect' => route('owner.transactions.show', $transaction->id)
+                'redirect' => route('owner.pos')
             ]);
             
         } catch (\Exception $e) {
