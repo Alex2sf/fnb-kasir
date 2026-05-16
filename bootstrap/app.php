@@ -18,3 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
+
+// Set public path untuk hosting cPanel
+$publicPath = realpath(__DIR__.'/../../public_html');
+if ($publicPath && is_dir($publicPath)) {
+    $app->usePublicPath($publicPath);
+}
+
+return $app;
