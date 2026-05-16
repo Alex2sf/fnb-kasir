@@ -14,10 +14,19 @@
     </div>
 
     @if(session('success'))
-        <div class="bg-emerald-50 text-emerald-600 p-4 rounded-xl mb-6 flex items-center gap-3 border border-emerald-100">
-            <i data-lucide="check-circle" class="w-5 h-5"></i>
-            <span class="font-medium text-sm">{{ session('success') }}</span>
-        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top-end'
+                });
+            });
+        </script>
     @endif
 
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -61,9 +70,9 @@
                             <button @click="showModal = true; editMode = true; discountId = {{ $discount->id }}; name = '{{ $discount->name }}'; type = '{{ $discount->type }}'; value = '{{ rtrim(rtrim($discount->value, '0'), '.') }}'; is_active = {{ $discount->is_active ? 'true' : 'false' }}" class="p-2 text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
                                 <i data-lucide="edit" class="w-4 h-4"></i>
                             </button>
-                            <form action="{{ route('owner.discounts.destroy', $discount) }}" method="POST" onsubmit="return confirm('Hapus diskon ini?')">
+                            <form id="delete-form-{{ $discount->id }}" action="{{ route('owner.discounts.destroy', $discount) }}" method="POST">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                                <button type="button" onclick="confirmDelete({{ $discount->id }}, '{{ $discount->name }}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                             </form>
@@ -135,3 +144,29 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function confirmDelete(id, name) {
+    Swal.fire({
+        title: 'Hapus Diskon?',
+        text: `Anda yakin ingin menghapus promo "${name}"?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4f46e5', // Warna tombol sesuai tema Indigo
+        cancelButtonColor: '#ef4444',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        reverseButtons: true,
+        customClass: {
+            confirmButton: 'rounded-xl',
+            cancelButton: 'rounded-xl'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    })
+}
+</script>
+@endpush
