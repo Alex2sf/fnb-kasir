@@ -8,6 +8,7 @@ use App\Http\Controllers\Owner\ProductController;
 use App\Http\Controllers\Owner\CategoryController;
 use App\Http\Controllers\Owner\CustomerController;
 use App\Http\Controllers\Owner\TransactionController;
+use App\Http\Controllers\Owner\OnboardingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,6 +38,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 // Owner Routes
 Route::middleware(['auth', 'role:owner'])->prefix('owner')->name('owner.')->group(function () {
+    // Onboarding (new store setup)
+    Route::get('/onboarding', [OnboardingController::class, 'index'])->name('onboarding');
+    Route::post('/onboarding', [OnboardingController::class, 'store'])->name('onboarding.store');
     Route::get('/dashboard', [OwnerDashboard::class, 'index'])->name('dashboard');
     Route::get('/pos', [PosController::class, 'index'])->name('pos');
     

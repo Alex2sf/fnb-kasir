@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $store = $user->store;
 
         if (!$store) {
-            return redirect()->route('owner.store.create')->with('warning', 'Harap buat toko Anda terlebih dahulu.');
+            return redirect()->route('owner.onboarding');
         }
 
         $totalProducts = Product::where('store_id', $store->id)->count();
