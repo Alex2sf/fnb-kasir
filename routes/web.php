@@ -15,6 +15,8 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::view('/panduan', 'guide')->name('guide');
+
 // Central redirect after login
 Route::get('/dashboard', function () {
     $role = auth()->user()->role->name;

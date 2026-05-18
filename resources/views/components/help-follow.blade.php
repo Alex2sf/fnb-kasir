@@ -1,7 +1,7 @@
 <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3" style="animation: slideInUp 0.6s ease-out forwards;">
     
     <!-- Panduan Alur -->
-    <a href="{{ route('owner.onboarding') }}" 
+    <a href="{{ route('guide') }}" 
        class="group flex items-center gap-2 px-4 py-3 bg-white text-slate-800 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border border-slate-200">
         <div class="bg-indigo-100 p-1.5 rounded-full group-hover:bg-indigo-200 transition-colors duration-300">
             <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
