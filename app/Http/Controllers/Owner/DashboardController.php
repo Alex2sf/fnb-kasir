@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $store = $user->store;
 
         if (!$store) {
-            return redirect()->route('owner.onboarding');
+            return view('owner.welcome');
         }
 
         $totalProducts = Product::where('store_id', $store->id)->count();
