@@ -11,11 +11,6 @@ class OnboardingController extends Controller
 {
     public function index()
     {
-        // If store already exists, redirect to dashboard
-        if (auth()->user()->store) {
-            return redirect()->route('owner.dashboard');
-        }
-
         return view('owner.onboarding');
     }
 

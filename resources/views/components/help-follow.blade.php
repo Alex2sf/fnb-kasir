@@ -15,7 +15,7 @@
     </a>
 
     <!-- Follow Instagram -->
-    <a href="https://instagram.com/warunggalih" target="_blank" 
+    <a href="https://instagram.com/warunggalih.id" target="_blank" 
        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-2xl hover:shadow-indigo-500/30 transform hover:-translate-y-1 transition-all duration-300 border border-white/20 backdrop-blur-sm">
         
         <div class="bg-white/20 p-1.5 rounded-full group-hover:scale-110 transition-transform duration-300">
@@ -26,7 +26,7 @@
         
         <div class="flex flex-col items-start leading-none">
             <span class="text-[10px] text-indigo-100 font-medium tracking-wider uppercase mb-0.5">Butuh Bantuan?</span>
-            <span class="text-sm font-bold tracking-wide">Follow <span class="text-yellow-300">@warunggalih</span></span>
+            <span class="text-sm font-bold tracking-wide">Follow <span class="text-yellow-300">@warunggalih.id</span></span>
         </div>
     </a>
 </div>
