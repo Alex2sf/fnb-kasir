@@ -68,5 +68,6 @@
         lucide.createIcons();
     </script>
     @stack('scripts')
+    <x-help-follow />
 </body>
 </html>
