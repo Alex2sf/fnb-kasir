@@ -81,6 +81,16 @@
                     <i data-lucide="users" class="w-5 h-5 {{ request()->routeIs('owner.customers.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Pelanggan
                 </a>
+                <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Bantuan</div>
+                
+                <a href="{{ route('guide') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium">
+                    <i data-lucide="book-open" class="w-5 h-5 text-slate-400"></i>
+                    Panduan Setup
+                </a>
+                <a href="https://instagram.com/warunggalih.id" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium">
+                    <i data-lucide="instagram" class="w-5 h-5 text-slate-400"></i>
+                    Follow Instagram
+                </a>
             </nav>
 
             <div class="p-4 border-t border-slate-100">
@@ -140,6 +150,5 @@
         lucide.createIcons();
     </script>
     @stack('scripts')
-    <x-help-follow />
 </body>
 </html>

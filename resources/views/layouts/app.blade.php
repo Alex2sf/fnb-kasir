@@ -32,6 +32,5 @@
                 {{ $slot }}
             </main>
         </div>
-        <x-help-follow />
     </body>
 </html>

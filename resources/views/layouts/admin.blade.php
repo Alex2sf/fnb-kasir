@@ -30,15 +30,26 @@
                     <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                     Dashboard
                 </a>
+
+                <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-500 uppercase tracking-wider">Bantuan</div>
+                
+                <a href="{{ route('guide') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    Panduan Setup
+                </a>
+                <a href="https://instagram.com/warunggalih.id" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                    Follow Instagram
+                </a>
             </nav>
 
             <div class="p-4 border-t border-slate-800">
                 <div class="flex items-center gap-3 mb-3 px-2">
                     <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center font-bold text-sm shadow-md">
-                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                     </div>
                     <div>
-                        <p class="text-sm font-semibold text-slate-200 leading-tight">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-semibold text-slate-200 leading-tight">{{ auth()->user()->name ?? 'Admin' }}</p>
                         <p class="text-xs text-slate-500">Super Admin</p>
                     </div>
                 </div>
@@ -68,6 +79,5 @@
         lucide.createIcons();
     </script>
     @stack('scripts')
-    <x-help-follow />
 </body>
 </html>

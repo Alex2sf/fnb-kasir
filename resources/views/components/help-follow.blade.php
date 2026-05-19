@@ -1,4 +1,5 @@
-<div class="fixed bottom-6 right-6 z-50 flex items-center gap-3" style="animation: slideInUp 0.6s ease-out forwards;">
+@if(!request()->routeIs('owner.pos'))
+<div x-data="{ show: true }" x-show="show" class="fixed bottom-6 right-6 z-50 flex items-center gap-3" style="animation: slideInUp 0.6s ease-out forwards;">
     
     <!-- Panduan Alur -->
     <a href="{{ route('guide') }}" 
@@ -29,6 +30,13 @@
             <span class="text-sm font-bold tracking-wide">Follow <span class="text-yellow-300">@warunggalih.id</span></span>
         </div>
     </a>
+
+    <!-- Close Button -->
+    <button @click="show = false" class="bg-white hover:bg-red-50 text-slate-400 hover:text-red-500 rounded-full p-2 shadow-lg transform hover:-translate-y-1 transition-all duration-300 border border-slate-200 focus:outline-none" title="Tutup">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
 </div>
 
 <style>
@@ -37,3 +45,4 @@
         to { opacity: 1; transform: translateY(0); }
     }
 </style>
+@endif
