@@ -69,7 +69,7 @@
                     Diskon & Promo
                 </a>
 
-                <a id="menu-pengeluaran" href="{{ route('owner.expenses.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->requestIs('owner/expenses*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-pengeluaran" href="{{ route('owner.expenses.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.expenses.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="wallet" class="w-5 h-5 {{ request()->routeIs('owner.expenses.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Pengeluaran
                 </a>
