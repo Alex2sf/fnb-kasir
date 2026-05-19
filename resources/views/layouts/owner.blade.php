@@ -84,9 +84,16 @@
                     <i data-lucide="tags" class="w-5 h-5 {{ request()->routeIs('owner.categories.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Kategori
                 </a>
-                <a id="menu-pelanggan" href="{{ route('owner.customers.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.customers.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a href="{{ route('owner.customers.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.customers.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="users" class="w-5 h-5 {{ request()->routeIs('owner.customers.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Pelanggan
+                </a>
+
+                <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Pusat Bantuan</div>
+                
+                <a id="menu-edukasi" href="{{ route('owner.articles.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.articles.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                    <i data-lucide="book-open" class="w-5 h-5 {{ request()->routeIs('owner.articles.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
+                    Pusat Edukasi
                 </a>
             </nav>
 

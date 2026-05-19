@@ -33,9 +33,13 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Routes
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Owner\ArticleController as OwnerArticleController;
+
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
     Route::post('/users/{user}/toggle-status', [AdminDashboard::class, 'toggleStatus'])->name('users.toggle-status');
+    Route::resource('articles', AdminArticleController::class);
 });
 
 // Owner Routes
@@ -62,6 +66,10 @@ Route::middleware(['auth', 'role:owner'])->prefix('owner')->name('owner.')->grou
     Route::resource('tables', \App\Http\Controllers\Owner\TableController::class)->except(['show']);
     Route::resource('discounts', \App\Http\Controllers\Owner\DiscountController::class)->except(['show']);
     Route::resource('expenses', \App\Http\Controllers\Owner\ExpenseController::class)->except(['show']);
+    
+    // Edukasi
+    Route::get('/articles', [OwnerArticleController::class, 'index'])->name('articles.index');
+    Route::get('/articles/{article:slug}', [OwnerArticleController::class, 'show'])->name('articles.show');
 });
 
 require __DIR__.'/auth.php';
