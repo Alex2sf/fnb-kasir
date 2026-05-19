@@ -26,20 +26,14 @@
             </div>
             
             <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+                <a href="https://instagram.com/warunggalih.id" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-pink-400 hover:bg-slate-800 transition-colors mb-4 border border-slate-800 shadow-sm">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                    @warunggalih.id
+                </a>
+
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-indigo-500/10 text-indigo-400 font-semibold">
                     <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                     Dashboard
-                </a>
-
-                <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-500 uppercase tracking-wider">Bantuan</div>
-                
-                <a href="{{ route('guide') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors">
-                    <i data-lucide="book-open" class="w-5 h-5"></i>
-                    Panduan Setup
-                </a>
-                <a href="https://instagram.com/warunggalih.id" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors">
-                    <i data-lucide="instagram" class="w-5 h-5"></i>
-                    Follow Instagram
                 </a>
             </nav>
 

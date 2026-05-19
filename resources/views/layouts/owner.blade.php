@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
@@ -34,62 +36,57 @@
             </div>
             
             <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1 hide-scrollbar">
-                <a href="{{ route('owner.dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.dashboard') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a href="https://instagram.com/warunggalih.id" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-pink-500 hover:bg-pink-50 hover:text-pink-600 transition-colors font-medium mb-4 shadow-sm border border-pink-100">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                    @warunggalih.id
+                </a>
+
+                <a id="menu-dashboard" href="{{ route('owner.dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.dashboard') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="layout-dashboard" class="w-5 h-5 {{ request()->routeIs('owner.dashboard') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Dashboard
                 </a>
                 
                 <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Kasir</div>
                 
-                <a href="{{ route('owner.pos') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.pos') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-pos" href="{{ route('owner.pos') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.pos') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="monitor-smartphone" class="w-5 h-5 {{ request()->routeIs('owner.pos') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Point of Sale
                 </a>
-                <a href="{{ route('owner.transactions.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.transactions.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-transaksi" href="{{ route('owner.transactions.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.transactions.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="receipt" class="w-5 h-5 {{ request()->routeIs('owner.transactions.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Riwayat Transaksi
                 </a>
 
                 <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Manajemen Toko</div>
                 
-                <a href="{{ route('owner.tables.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.tables.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-meja" href="{{ route('owner.tables.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.tables.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="grid-2x2" class="w-5 h-5 {{ request()->routeIs('owner.tables.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Manajemen Meja
                 </a>
 
-                <a href="{{ route('owner.discounts.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.discounts.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-diskon" href="{{ route('owner.discounts.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.discounts.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="percent" class="w-5 h-5 {{ request()->routeIs('owner.discounts.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Diskon & Promo
                 </a>
 
-                <a href="{{ route('owner.expenses.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.expenses.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-pengeluaran" href="{{ route('owner.expenses.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->requestIs('owner/expenses*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="wallet" class="w-5 h-5 {{ request()->routeIs('owner.expenses.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Pengeluaran
                 </a>
 
                 <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Manajemen Menu</div>
                 
-                <a href="{{ route('owner.products.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.products.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-produk" href="{{ route('owner.products.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.products.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="coffee" class="w-5 h-5 {{ request()->routeIs('owner.products.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Daftar Menu
                 </a>
-                <a href="{{ route('owner.categories.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.categories.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-kategori" href="{{ route('owner.categories.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.categories.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="tags" class="w-5 h-5 {{ request()->routeIs('owner.categories.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Kategori
                 </a>
-                <a href="{{ route('owner.customers.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.customers.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
+                <a id="menu-pelanggan" href="{{ route('owner.customers.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('owner.customers.*') ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium' }}">
                     <i data-lucide="users" class="w-5 h-5 {{ request()->routeIs('owner.customers.*') ? 'text-indigo-600' : 'text-slate-400' }}"></i>
                     Pelanggan
-                </a>
-                <div class="pt-5 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Bantuan</div>
-                
-                <a href="{{ route('guide') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium">
-                    <i data-lucide="book-open" class="w-5 h-5 text-slate-400"></i>
-                    Panduan Setup
-                </a>
-                <a href="https://instagram.com/warunggalih.id" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium">
-                    <i data-lucide="instagram" class="w-5 h-5 text-slate-400"></i>
-                    Follow Instagram
                 </a>
             </nav>
 
@@ -119,6 +116,11 @@
                 </div>
 
                 <div class="flex items-center gap-4">
+                    <!-- Tour Button -->
+                    <button onclick="startDashboardTour()" class="relative p-2 text-indigo-500 hover:text-indigo-700 transition-colors rounded-full hover:bg-indigo-50" title="Mulai Panduan Tour">
+                        <i data-lucide="info" class="w-5 h-5"></i>
+                    </button>
+                    
                     <button class="relative p-2 text-slate-400 hover:text-slate-600 transition-colors rounded-full hover:bg-slate-100">
                         <i data-lucide="bell" class="w-5 h-5"></i>
                         <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
@@ -148,6 +150,26 @@
 
     <script>
         lucide.createIcons();
+
+        function startDashboardTour() {
+            if (typeof window.driver !== 'undefined') {
+                const driverObj = window.driver.js.driver({
+                    showProgress: true,
+                    steps: [
+                        { popover: { title: 'Selamat Datang!', description: 'Mari kita jelajahi fitur-fitur yang ada di sistem kasir Anda.', align: 'center' }},
+                        { element: '#menu-dashboard', popover: { title: 'Dashboard', description: 'Lihat ringkasan performa penjualan dan statistik toko Anda di sini.', side: "right", align: 'start' }},
+                        { element: '#menu-pos', popover: { title: 'Kasir / POS', description: 'Gunakan menu ini untuk melayani pembeli dan mencatat pesanan.', side: "right", align: 'start' }},
+                        { element: '#menu-transaksi', popover: { title: 'Riwayat Transaksi', description: 'Semua riwayat penjualan akan tercatat otomatis di menu ini.', side: "right", align: 'start' }},
+                        { element: '#menu-produk', popover: { title: 'Kelola Produk', description: 'Kelola daftar barang dagangan, stok, dan harga jual di sini.', side: "right", align: 'start' }},
+                        { element: '#menu-kategori', popover: { title: 'Kategori Produk', description: 'Kelompokkan barang dagangan agar lebih rapi saat di kasir.', side: "right", align: 'start' }}
+                    ],
+                    nextBtnText: 'Lanjut',
+                    prevBtnText: 'Kembali',
+                    doneBtnText: 'Selesai',
+                });
+                driverObj.drive();
+            }
+        }
     </script>
     @stack('scripts')
 </body>
