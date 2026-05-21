@@ -5,13 +5,13 @@
 @section('content')
 <div class="space-y-6">
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div id="tour-header" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Dashboard Overview</h1>
             <p class="text-slate-500 mt-1 text-sm">Pantau performa bisnis <span class="font-semibold text-indigo-600">{{ $store->name }}</span> hari ini.</p>
         </div>
         <div>
-            <a href="{{ route('owner.pos') }}" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-medium transition-colors shadow-sm shadow-indigo-200">
+            <a id="tour-pos-btn" href="{{ route('owner.pos') }}" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-medium transition-colors shadow-sm shadow-indigo-200">
                 <i data-lucide="monitor-play" class="w-5 h-5"></i>
                 Buka Kasir POS
             </a>
@@ -19,7 +19,7 @@
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div id="tour-stats" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Card 1: Omzet Hari Ini -->
         <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
             <div class="absolute -right-6 -top-6 bg-indigo-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
@@ -90,7 +90,7 @@
     </div>
     
     <!-- Content Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div id="tour-chart-area" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Chart -->
         <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
             <div class="flex items-center justify-between mb-6">
@@ -140,7 +140,7 @@
     </div>
 
     <!-- Secondary Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div id="tour-top-products" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Top Selling Products -->
         <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
             <div class="flex items-center justify-between mb-6">
@@ -173,6 +173,28 @@
             </div>
         </div>
     </div>
+    {{-- Onboarding Tour --}}
+    @php
+    $tourSteps = [
+        ['target' => '#tour-stats', 'title' => '📊 Statistik Bisnis', 'description' => 'Lihat ringkasan performa toko kamu: omzet harian, laba bersih, total omzet, dan pengeluaran. Semua ter-update real-time!', 'icon' => '📊', 'iconBg' => 'linear-gradient(135deg, #4f46e5, #6366f1)', 'position' => 'bottom'],
+        ['target' => '#tour-pos-btn', 'title' => '🖥️ Buka Kasir POS', 'description' => 'Klik tombol ini untuk membuka layar kasir. Di sini kamu bisa input pesanan, pilih menu, dan proses pembayaran.', 'icon' => '🖥️', 'iconBg' => 'linear-gradient(135deg, #6366f1, #818cf8)', 'position' => 'bottom'],
+        ['target' => '#tour-chart-area', 'title' => '📈 Grafik & Transaksi', 'description' => 'Grafik pendapatan 7 hari terakhir dan daftar transaksi terbaru. Pantau tren penjualan kamu setiap hari.', 'icon' => '📈', 'iconBg' => 'linear-gradient(135deg, #10b981, #059669)', 'position' => 'bottom'],
+        ['target' => '#tour-top-products', 'title' => '🏆 Menu Paling Laris', 'description' => 'Lihat menu mana yang paling banyak dipesan. Data ini bantu kamu ambil keputusan soal stok dan promosi.', 'icon' => '🏆', 'iconBg' => 'linear-gradient(135deg, #f59e0b, #d97706)', 'position' => 'top'],
+        ['target' => '#menu-pos', 'title' => '🖥️ Point of Sale', 'description' => 'Menu kasir utama! Di sini kamu pilih menu, atur jumlah, pilih meja, kasih diskon, dan proses pembayaran. Cepat dan mudah!', 'icon' => '🖥️', 'iconBg' => 'linear-gradient(135deg, #4f46e5, #4338ca)', 'position' => 'right'],
+        ['target' => '#menu-transaksi', 'title' => '🧾 Riwayat Transaksi', 'description' => 'Semua transaksi tercatat otomatis di sini. Bisa filter tanggal, export ke Excel, dan cetak struk ulang.', 'icon' => '🧾', 'iconBg' => 'linear-gradient(135deg, #3b82f6, #2563eb)', 'position' => 'right'],
+        ['target' => '#menu-produk', 'title' => '☕ Daftar Menu', 'description' => 'Kelola semua menu makanan & minuman: nama, harga jual, harga modal, gambar, dan kategori. Bisa aktif/nonaktifkan menu.', 'icon' => '☕', 'iconBg' => 'linear-gradient(135deg, #8b5cf6, #7c3aed)', 'position' => 'right'],
+        ['target' => '#menu-meja', 'title' => '🪑 Manajemen Meja', 'description' => 'Atur nomor meja restoran kamu. Saat transaksi, kasir bisa pilih meja mana yang sedang order.', 'icon' => '🪑', 'iconBg' => 'linear-gradient(135deg, #14b8a6, #0d9488)', 'position' => 'right'],
+        ['target' => '#menu-diskon', 'title' => '🏷️ Diskon & Promo', 'description' => 'Buat promo diskon persen atau potongan harga tetap. Kasir bisa langsung apply diskon saat transaksi!', 'icon' => '🏷️', 'iconBg' => 'linear-gradient(135deg, #ec4899, #db2777)', 'position' => 'right'],
+        ['target' => '#menu-pengeluaran', 'title' => '💸 Pengeluaran', 'description' => 'Catat semua pengeluaran operasional: bahan baku, listrik, gaji, dll. Otomatis dihitung di dashboard untuk laba bersih.', 'icon' => '💸', 'iconBg' => 'linear-gradient(135deg, #ef4444, #dc2626)', 'position' => 'right'],
+    ];
+    @endphp
+    <x-onboarding-tour
+        tour-id="fnb-owner"
+        :auto-start="true"
+        :steps="$tourSteps"
+        :app-name="$store->name ?? 'FNB POS'"
+        :user-name="auth()->user()->name ?? 'Boss'"
+    />
 </div>
 @endsection
 
